@@ -269,7 +269,7 @@ int main() {
 
     LeerDatos(longitudes, tiemposRecursivo, tiemposDP);
     DibujarGrafico(longitudes, tiemposRecursivo, tiemposDP);
-    cout << "Presione enter para finalizar" << endl;
+    cout << "Presione enter para finalizar..." << endl;
     cin.get();
     return 0;
 }
