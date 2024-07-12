@@ -23,29 +23,50 @@ bool isPalindrome(const string& str, int i, int j) {
     return true;
 }
 
-int minCutsRecursive(const string& str, int i, int j, vector<vector<int>>& dp) {
-    if (i >= j || isPalindrome(str, i, j))
+// Función recursiva con memoización
+int minCutsRecursive(const string& str, int i, int j, vector<vector<int>>& C, vector<vector<bool>>& P) {
+    if (i >= j || P[i][j]) // Si la subcadena es un palíndromo, no se necesitan cortes
         return 0;
 
-    if (dp[i][j] != -1)
-        return dp[i][j];
+    if (C[i][j] != -1) // Si ya calculamos este subproblema, devolvemos el resultado almacenado
+        return C[i][j];
 
     int minCuts = INT_MAX;
     for (int k = i; k < j; k++) {
-        if (isPalindrome(str, i, k)) {
-            int cuts = 1 + minCutsRecursive(str, k + 1, j, dp);
+        if (P[i][k]) { // Si la subcadena str[i..k] es un palíndromo
+            int cuts = 1 + minCutsRecursive(str, k + 1, j, C, P);
             minCuts = min(minCuts, cuts);
         }
     }
 
-    return dp[i][j] = minCuts;
+    return C[i][j] = minCuts;
 }
 
 int minCuts(const string& str) {
     int n = str.size();
-    vector<vector<int>> dp(n, vector<int>(n, -1));
-    return minCutsRecursive(str, 0, n - 1, dp);
+    vector<vector<int>> C(n, vector<int>(n, -1));
+    vector<vector<bool>> P(n, vector<bool>(n, false));
+
+    // Inicializar P para todas las subcadenas
+    for (int i = 0; i < n; i++) {
+        P[i][i] = true;
+    }
+    for (int L = 2; L <= n; L++) {
+        for (int i = 0; i < n - L + 1; i++) {
+            int j = i + L - 1;
+            if (L == 2) {
+                P[i][j] = (str[i] == str[j]);
+            }
+            else {
+                P[i][j] = (str[i] == str[j]) && P[i + 1][j - 1];
+            }
+        }
+    }
+
+    // Llamar a la función recursiva con memoización
+    return minCutsRecursive(str, 0, n - 1, C, P);
 }
+
 
 // Algoritmo O(n^2) Enfoque de programacion dinamica
 int minCutsDP(const string& str) {
