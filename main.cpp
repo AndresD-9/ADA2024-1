@@ -67,7 +67,6 @@ int minCuts(const string& str) {
     return minCutsRecursive(str, 0, n - 1, C, P);
 }
 
-
 // Algoritmo O(n^2) Enfoque de programacion dinamica
 int minCutsDP(const string& str) {
     int n = str.size();
