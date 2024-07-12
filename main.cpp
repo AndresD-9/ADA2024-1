@@ -136,7 +136,7 @@ void LeerDatos(vector<float>& longitudes, vector<float>& tiemposRecursivo, vecto
 
 // Dibujar el gráfico de dispersión
 void DibujarGrafico(const vector<float>& longitudes, const vector<float>& tiemposRecursivo, const vector<float>& tiemposDP) {
-    sf::RenderWindow window(sf::VideoMode(800, 700), "Gráfico de Dispersión");
+    sf::RenderWindow window(sf::VideoMode(800, 700), "Gráfico de Dispersión | En rojo recursivo | En azul dinamico");
 
     // Cargar una fuente
     sf::Font font;
